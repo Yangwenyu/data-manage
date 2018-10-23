@@ -10,6 +10,7 @@ class Auth_admin(db.Model):
     email = db.Column(db.String(50), nullable=False, unique=True)    # 邮箱
     username = db.Column(db.String(20), nullable=False, unique=True)    # 用户名
     password = db.Column(db.String(100), nullable=False)    # 密码
+    gender = db.Column(db.String(10), nullable=False)    # 性别
     rules = db.Column(db.Text, nullable=False, default='')    # 用户规则
     status = db.Column(db.Boolean, nullable=False, default='1')  # 账号状态
     remark = db.Column(db.String(255), nullable=False, default='')  # 备注信息
@@ -20,10 +21,11 @@ class Auth_admin(db.Model):
         email = kwargs.get('email')
         username = kwargs.get('username')
         password = kwargs.get('password')
-
+        gender = kwargs.get('gender')
         self.email = email
         self.username = username
         self.password = generate_password_hash(password)
+        self.gender = gender
 
     def check_password(self, raw_password):
         result = check_password_hash(self.password, raw_password)
@@ -43,6 +45,15 @@ class Auth_rule(db.Model):
     listorder = db.Column(db.Integer, nullable=False, default='0')  # 排序
 
 
+# 远行星号的舰船数据表
+class Data_starsector(db.Model):
+    __tablename__ = 'data_starsector'
+    id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(30), nullable=False)    # 名称
+    shipclass = db.Column(db.String(30), nullable=False)    # 名称
+    force = db.Column(db.String(30), nullable=False)    # 所属势力
+    pic_address = db.Column(db.String(100), nullable=False)    # 名称
+    listorder = db.Column(db.Integer, nullable=False, default='0', index=True)    # 排序id
 
 
 
