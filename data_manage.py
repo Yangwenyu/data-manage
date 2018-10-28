@@ -6,6 +6,9 @@ from exts import db
 from decorators import login_required
 from sqlalchemy import or_
 from datetime import timedelta
+import json
+import datetime
+
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -80,13 +83,42 @@ def gamedata_starsector():
     context = {
         'starsectors': Data_starsector.query.order_by('listorder').all()
     }
-    return render_template('gamedata-starsector.html', **context)
+    c = context
+    return json.dumps(c, cls=AlchemyEncoder)
+    # return render_template('gamedata-starsector.html', **context)
 
 
 @app.route('/gamedata-starsecor/detail/<ship_id>')
 def starsector_ship_detail(ship_id):
     starsector_ship = Data_starsector.query.filter(Data_starsector.id == ship_id).first()
     return render_template('gamedata-starsector.html', starsector_ship=starsector_ship)
+
+
+# 转换成json
+from sqlalchemy.ext.declarative import DeclarativeMeta
+class AlchemyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj.__class__, DeclarativeMeta):
+            # an SQLAlchemy class
+            fields = {}
+            for field in [x for x in dir(obj) if not x.startswith('_') and x != 'metadata']:
+                data = obj.__getattribute__(field)
+                try:
+                    json.dumps(data)     # this will fail on non-encodable values, like other classes
+                    fields[field] = data
+                except TypeError:    # 添加了对datetime的处理
+                    if isinstance(data, datetime.datetime):
+                        fields[field] = data.isoformat()
+                    elif isinstance(data, datetime.date):
+                        fields[field] = data.isoformat()
+                    elif isinstance(data, datetime.timedelta):
+                        fields[field] = (datetime.datetime.min + data).time().isoformat()
+                    else:
+                        fields[field] = None
+            # a json-encodable dict
+            return fields
+
+        return json.JSONEncoder.default(self, obj)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% block head %}{% endblock %}
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+{% endblock %}
 
 {% block main %}
     <div class="app-title">
@@ -60,7 +62,9 @@
                         <div class="card mb-3 border-info" style="height: 500px; width: 100%; display: block;">
                             <div class="card-body">
                                 <blockquote class="card-blockquote">
-                                    <p>XXXXXXXXXXXXXXXXXXXXXXXX</p>
+                                    <div>
+                                        {{ message }}
+                                    </div>
                                 </blockquote>
                             </div>
                         </div>
@@ -91,4 +95,15 @@
 
 {% endblock %}
 
-{% block tail %}{% endblock %}
+{% block tail %}
+
+
+    <script>
+        var app = new Vue({
+          el: '#app',
+          data: {
+            message: 'Hello Vue!'
+          }
+        })
+    </script>
+{% endblock %}
