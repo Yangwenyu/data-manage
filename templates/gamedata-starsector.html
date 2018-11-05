@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
 {% endblock %}
 
 {% block main %}
@@ -16,7 +16,7 @@
             <li class="breadcrumb-item"><a href="#">远行星号</a></li>
         </ul>
     </div>
-    <div class="row">
+    <div class="row" id="app">
         <div class="col-md-5">
             <div class="tile">
                 <h3 class="tile-title">舰船数据</h3>
@@ -63,7 +63,7 @@
                             <div class="card-body">
                                 <blockquote class="card-blockquote">
                                     <div>
-                                        {{ message }}
+                                        [[ message ]]
                                     </div>
                                 </blockquote>
                             </div>
@@ -99,11 +99,14 @@
 
 
     <script>
+
+
         var app = new Vue({
-          el: '#app',
-          data: {
-            message: 'Hello Vue!'
-          }
+            delimiters: ['[[', ']]'],
+            el: '#app',
+            data: {
+                message: 'Hello Vue!'
+            }
         })
     </script>
 {% endblock %}

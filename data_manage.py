@@ -78,14 +78,18 @@ def auth_admin_register():
             return redirect(url_for('auth_admin'))
 
 
-@app.route('/gamedata-starsecor/')
-def gamedata_starsector():
+@app.route('/api/gamedata-starsecor/')
+def api_gamedata_starsector():
     context = {
         'starsectors': Data_starsector.query.order_by('listorder').all()
     }
     c = context
     return json.dumps(c, cls=AlchemyEncoder)
     # return render_template('gamedata-starsector.html', **context)
+
+@app.route('/gamedata-starsecor/')
+def gamedata_starsector():
+    return render_template('gamedata-starsector.html')
 
 
 @app.route('/gamedata-starsecor/detail/<ship_id>')
