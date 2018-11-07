@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block main %}
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-dashboard"></i> 远行星号</h1>
+            <p>铁甲舰 舰船数据</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item">游戏数据</li>
+            <li class="breadcrumb-item"><a href="#">远行星号</a></li>
+        </ul>
+    </div>
+    <div class="row" id="app">
+        <div class="col-md-5">
+            <div class="tile">
+                <h3 class="tile-title">舰船数据</h3>
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>舰船名称</th>
+                        <th>舰船级别</th>
+                        <th>所属势力</th>
+                        <th>查看详情</th>
+                    </tr>
+                    </thead>
+                    <tbody v-for="starsector in starsectors">
+                        <tr>
+                            <td>[[ starsector.id ]]</td>
+                            <td>[[ starsector.name ]]</td>
+                            <td>[[ starsector.shipclass ]]</td>
+                            <td>[[ starsector.force ]]</td>
+                            <td><a href="#">详情>></a></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="tile">
+                <div class="row-fluid">
+                    <div class="card mb-3 border-info">
+                        <div class="card-body">
+                            <blockquote class="card-blockquote">
+                                <br>
+                                <h3 class="text-center">XXXXXXXX</h3>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card mb-3 border-info" style="height: 500px; width: 100%; display: block;">
+                            <div class="card-body">
+                                <blockquote class="card-blockquote">
+                                    <div>
+                                        [[ info ]]
+                                    </div>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card mb-3 border-info" style="height: 500px; width: 100%; display: block;">
+                            <div class="card-body">
+                                <blockquote class="card-blockquote">
+                                    <img style="height: 460px; width: 100%; display: block;" src="{{ url_for('static', filename='images/other/starsector/default.jpg') }}" alt="Card image">
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="card mb-3 border-info" style="height: 180px;">
+
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="card mb-3 border-info" style="height: 100px;">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block tail %}
+
+<script>
+
+    new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#app',
+        data: {
+            starsectors: [],
+            shipdetail: [],
+            info: 'The name of some other app'
+        },
+        methods: {},
+        created: function () {
+            var url = 'http://localhost:5000/api/gamedata-starsecor/';
+            data = JSON.stringify({});
+            axios.get(url, data).then(function (res) {
+                console.log(res.data);
+                this.starsectors = res.data['starsectors'];
+
+                console.log(res.data['starsectors']);
+
+                for (x in res.data['starsectors']) {
+                    console.log(res.data['starsectors'][x]);
+                }
+            });
+        }
+    })
+
+</script>
+
+{% endblock %}

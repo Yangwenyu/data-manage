@@ -1,21 +1,32 @@
-from flask_script import Manager
+import os
 from flask_migrate import Migrate, MigrateCommand
-from data_manage import app
-from exts import db
-from models import Auth_rule
-# from models import User, Question, Answer
+from flask_script import Manager, Shell
+from app import create_app, db
+from app.models import users
+
 # cmd命令
 # python manage.py db init    初始化
 # python manage.py db migrate
 # python manage.py db upgrade    映射
-
+app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
-
-# 使用Migrate绑定app和db
 migrate = Migrate(app, db)
 
-# 添加迁移脚本的命令到manager中
-manager.add_command('db', MigrateCommand)
+
+def make_shell_context():
+    return dict(app=app, db=db)
+
+
+manager.add_command("shell", Shell(make_context=make_shell_context))
+manager.add_command("db", MigrateCommand)
+
+
+@manager.command
+def test():
+    """run the unit tests."""
+    import unittest
+    tests = unittest.TestLoader().discover('tests')
+    unittest.TextTestRunner(verbosity=2).run(tests)
 
 
 if __name__ == '__main__':
