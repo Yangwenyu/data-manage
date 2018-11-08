@@ -102,24 +102,23 @@
         delimiters: ['[[', ']]'],
         el: '#app',
         data: {
-            starsectors: [],
-            shipdetail: [],
-            info: 'The name of some other app'
+                starsectors: [],
+                shipdetail: [],
+                info: 'The name of some other app'
+            },
+        methods: {
+            showshipslist(){
+                var that = this;
+                var url = 'http://localhost:5000/api/gamedata-starsecor/';
+                data = JSON.stringify({});
+                axios.get(url, data).then(function (res) {
+                    console.log(res.data);
+                    that.starsectors = res.data['starsectors'];
+                });
+            }
         },
-        methods: {},
         created: function () {
-            var url = 'http://localhost:5000/api/gamedata-starsecor/';
-            data = JSON.stringify({});
-            axios.get(url, data).then(function (res) {
-                console.log(res.data);
-                this.starsectors = res.data['starsectors'];
-
-                console.log(res.data['starsectors']);
-
-                for (x in res.data['starsectors']) {
-                    console.log(res.data['starsectors'][x]);
-                }
-            });
+            this.showshipslist();
         }
     })
 

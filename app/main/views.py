@@ -20,7 +20,7 @@ import datetime
 
 # 主页视图
 @main.route('/', methods=['GET','POST'])
-@login_required
+# @login_required
 def index():
     return render_template('index.html')
 
@@ -101,8 +101,17 @@ def starsector_ship_detail(ship_id):
     return render_template('gamedata-starsector.html', starsector_ship=starsector_ship)
 
 
+@main.route('/bx-list/')
+def bx_list():
+
+    return render_template('bx/bx-list.html')
+
+
+
+
 # 转换成json
 from sqlalchemy.ext.declarative import DeclarativeMeta
+
 class AlchemyEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj.__class__, DeclarativeMeta):
