@@ -17,8 +17,7 @@
 <body class="app sidebar-mini rtl">
 <!-- Navbar-->
 <header class="app-header"><a class="app-header__logo" href="index.html">Chaos</a>
-    <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
-                                    aria-label="Hide Sidebar"></a>
+    <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
     <!-- Navbar Right Menu-->
     <ul class="app-nav">
         <li class="app-search">
@@ -92,6 +91,7 @@
         <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i
                 class="fa fa-user fa-lg"></i></a>
             <ul class="dropdown-menu settings-menu dropdown-menu-right">
+                <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-cog fa-lg"></i> 个人设置</a></li>
                 <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-user fa-lg"></i> 个人中心</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('main.logout') }}"><i class="fa fa-sign-out fa-lg"></i> 退出登录</a></li>
             </ul>
@@ -100,7 +100,7 @@
 </header>
 <!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-<aside class="app-sidebar">
+<aside class="app-sidebar" id="menu">
     <div class="app-sidebar__user"><img class="app-sidebar__user-avatar"
                                         src="{{ url_for('static', filename='images/system/head_test.jpg') }}"
                                         alt="头像图片">
@@ -113,14 +113,28 @@
         <li><a class="app-menu__item active" href="{{ url_for('main.index') }}"><i
                 class="app-menu__icon fa fa-dashboard"></i><span
                 class="app-menu__label">首页</span></a></li>
+
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">学习资料</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i>Python基础</a></li>
+                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i>Python进阶</a></li>
+                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i>Django学习</a></li>
+                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i>Flask学习</a></li>
+                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i>PHP基础</a></li>
+                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i>Thinkphp学习</a></li>
+                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i>Java基础</a></li>
+                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i>CSS基础</a></li>
+                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i>JavaScript基础</a></li>
+                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i>Vue学习</a></li>
+            </ul>
+        </li>
+
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
                 class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">UI Elements</span><i
                 class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i>
-                    Bootstrap Elements</a></li>
-                <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank"
-                       rel="noopener"><i class="icon fa fa-circle-o"></i> Font Icons</a></li>
+                <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i>Bootstrap Elements</a></li>
+                <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Font Icons</a></li>
                 <li><a class="treeview-item" href="ui-cards.html"><i class="icon fa fa-circle-o"></i> Cards</a></li>
                 <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-circle-o"></i> Widgets</a></li>
             </ul>
@@ -149,20 +163,21 @@
             </ul>
         </li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
+                class="app-menu__icon fa fa-gamepad"></i><span class="app-menu__label">我的游戏</span><i
+                class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+                <li><a class="treeview-item" href="{{ url_for('main.spider_solitaire') }}"><i class="icon fa fa-circle-o"></i> 蜘蛛纸牌</a></li>
+                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> 贪吃蛇</a></li>
+                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> 俄罗斯方块</a></li>
+            </ul>
+        </li>
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
                 class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">游戏数据</span><i
                 class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li><a class="treeview-item" href="{{ url_for('main.gamedata_starsector') }}"><i class="icon fa fa-circle-o"></i> 远行星号</a></li>
                 <li><a class="treeview-item" href="table-data-table.html"><i class="icon fa fa-circle-o"></i> Data
                     Tables</a></li>
-            </ul>
-        </li>
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
-                class="app-menu__icon fa fa-gamepad"></i><span class="app-menu__label">我的游戏</span><i
-                class="treeview-indicator fa fa-angle-right"></i></a>
-            <ul class="treeview-menu">
-                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> 贪吃蛇</a></li>
-                <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> 俄罗斯方块</a></li>
             </ul>
         </li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
@@ -199,6 +214,7 @@
     </ul>
 </aside>
 
+<!-- 主页面 -->
 <main class="app-content">
     {% block main %}{% endblock %}
 </main>
@@ -211,5 +227,32 @@
 <!-- The javascript plugin to display page loading on top-->
 <script src="{{ url_for('static', filename='js/plugins/pace.min.js') }}"></script>
 {% block tail %}{% endblock %}
+
+<script>
+
+    new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#menu',
+        data: {
+            menu_list: []
+        },
+        methods: {
+            showmenu(){
+                var that = this;
+                var url = 'http://localhost:5000/api/gamedata-starsecor/';
+                data = JSON.stringify({});
+                axios.get(url, data).then(function (res) {
+                    console.log(res.data);
+                    that.starsectors = res.data['starsectors'];
+                });
+            }
+        },
+        created: function () {
+            this.showmenu();
+        }
+    })
+
+</script>
+
 </body>
 </html>

@@ -1,16 +1,17 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, session, g, flash
-# from app import config
-# from models import User, Question, Answer
-from ..models import users, gamedata
-from . import main
-# from app.models import Auth_admin, Auth_rule, Data_starsector
-from flask_sqlalchemy import SQLAlchemy
-from .decorators import login_required
-from sqlalchemy import or_
-from datetime import timedelta
 import json
 import datetime
+from flask import Flask, render_template, request, redirect, url_for, session, g, flash
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
+from datetime import timedelta
+from app import db
+# from models import User, Question, Answer
+from . import main
+from .decorators import login_required
+from ..models import users, gamedata, bx
+# from app.models import Auth_admin, Auth_rule, Data_starsector
+
 
 # db = SQLAlchemy()
 # app = Flask(__name__)
@@ -18,9 +19,24 @@ import datetime
 # db.init_app(app)
 
 
+# 边栏菜单
+@main.route('/sidemenu/', methods=['GET'])
+def sidemenu():
+    context = {
+        'sidemenu': gamedata.Data_starsector.query.order_by('listorder').all()
+    }
+
+
+    res = db.session.execute("select b.id, a.pid, a.`name` as topname, b.`name`, b.rule, b.pagetitle, b.pagedesc, b.auth_check, b.only_root from auth_rule as a "
+                     "LEFT JOIN auth_rule as b on a.id = b.pid where a.pid = 0 and b.status = 1 ORDER BY b.listorder").fetchall()
+    print(res)
+
+    return json.dumps(context, cls=AlchemyEncoder)
+
+
 # 主页视图
-@main.route('/', methods=['GET','POST'])
-# @login_required
+@main.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
     return render_template('index.html')
 
@@ -105,6 +121,14 @@ def starsector_ship_detail(ship_id):
 def bx_list():
 
     return render_template('bx/bx-list.html')
+
+
+
+# 蜘蛛纸牌
+@main.route('/spider-solitaire/')
+def spider_solitaire():
+    return render_template('game/spider-solitaire.html')
+
 
 
 

@@ -39,6 +39,8 @@ class Auth_rule(db.Model):
     pid = db.Column(db.Integer, nullable=False, default='0', index=True)    # 上级id
     name = db.Column(db.String(30), nullable=False)    # 名称
     rule = db.Column(db.String(100), nullable=False, default='', index=True)    # 规则
+    pagetitle = db.Column(db.String(30), nullable=False)    # 页面名称
+    pagedesc = db.Column(db.String(120), nullable=False, default='', index=True)    # 页面简洁
     auth_check = db.Column(db.Boolean, nullable=False, default='1')  # 是否进行权限验证
     only_root = db.Column(db.Boolean, nullable=False, default='0')  # 仅开发者权限
     status = db.Column(db.Boolean, nullable=False, default='1')  # 状态

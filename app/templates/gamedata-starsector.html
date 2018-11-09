@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-7" v-if="seen">
             <div class="tile">
                 <div class="row-fluid">
                     <div class="card mb-3 border-info">
@@ -103,6 +103,7 @@
         el: '#app',
         data: {
                 starsectors: [],
+                seen: false,
                 shipdetail: [],
                 info: 'The name of some other app'
             },

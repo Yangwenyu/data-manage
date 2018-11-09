@@ -17,66 +17,62 @@
         <div class="row">
         <div class="col-lg-12">
             <p class="bs-component">
-                <button class="btn btn-primary" type="button">Primary</button>
-                <button class="btn btn-secondary" type="button">Secondary</button>
-                <button class="btn btn-success" type="button">Success</button>
-                <button class="btn btn-info" type="button">Info</button>
-                <button class="btn btn-primary" type="button">Primary</button>
-                <button class="btn btn-secondary" type="button">Secondary</button>
-                <button class="btn btn-success" type="button">Success</button>
-                <button class="btn btn-info" type="button">Info</button>
-                <button class="btn btn-warning" type="button">Warning</button>
-                <button class="btn btn-danger" type="button">Danger</button>
-                <button class="btn btn-secondary" type="button">Secondary</button>
-                <button class="btn btn-warning" type="button">Warning</button>
-                <button class="btn btn-danger" type="button">Danger</button>
-                <button class="btn btn-secondary" type="button">Secondary</button>
-                <button class="btn btn-success" type="button">Success</button>
-                <button class="btn btn-info" type="button">Info</button>
-                <button class="btn btn-primary" type="button">Primary</button>
-                <button class="btn btn-secondary" type="button">Secondary</button>
-                <button class="btn btn-success" type="button">Success</button>
-                <button class="btn btn-info" type="button">Info</button>
-                <button class="btn btn-warning" type="button">Warning</button>
-                <button class="btn btn-danger" type="button">Danger</button>
-                <button class="btn btn-secondary" type="button">Secondary</button>
-                <button class="btn btn-warning" type="button">Warning</button>
-                <button class="btn btn-danger" type="button">Danger</button>
+                <button class="btn btn-primary" type="button">少年</button>
+                <button class="btn btn-secondary" type="button">中年</button>
+                <button class="btn btn-success" type="button">老年</button>
+                <button class="btn btn-info" type="button">消费型</button>
+                <button class="btn btn-primary" type="button">储蓄型</button>
+                <button class="btn btn-secondary" type="button">旅游</button>
+                <button class="btn btn-success" type="button">意外</button>
+                <button class="btn btn-info" type="button">健康</button>
+                <button class="btn btn-warning" type="button">财产</button>
+                <button class="btn btn-danger" type="button">企业</button>
+                <button class="btn btn-secondary" type="button">人寿</button>
+                <button class="btn btn-warning" type="button">车险</button>
             </p>
         </div>
     </div>
 
     <div class="row">
 
+        <div class="col-md-4" v-for="one_bx in bx_list">
 
-
-        <div class="col-md-6">
-            <div class="tile">
+            <div class="tile" v-if="[[ one_bx.id ]]%3==0">
                 <div class="tile-title-w-btn">
-                    <h3 class="title">SweetAlert</h3>
-                    <p><a class="btn btn-primary icon-btn" href="http://t4t5.github.io/sweetalert/" target="_blank"><i
-                            class="fa fa-file"></i>Docs</a></p>
+                    <h3 class="title">[[ one_bx.bxname ]]</h3>
+                    <p><a class="btn btn-primary icon-btn" href="#" target="_blank"><i class="fa fa-file"></i>Docs</a></p>
                 </div>
                 <div class="tile-body">
-                    <p>This plugin can be used as the replacement of native javascript alert, confirm and prompt
-                        functions.</p>
-                    <h4>Demo</h4><a class="btn btn-info" id="demoSwal" href="#">Sample Alert</a>
+                    <p>[[ one_bx.introduction ]]</p>
+                    <h5>保费：[[ one_bx.coverage ]]元/起</h5>
+                    <a class="btn btn-info" id="demoSwal" href="#">Sample Alert</a>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="tile">
+
+            <div class="tile" v-if="[[ one_bx.id ]]%3==1">
                 <div class="tile-title-w-btn">
-                    <h3 class="title">SweetAlert</h3>
-                    <p><a class="btn btn-primary icon-btn" href="http://t4t5.github.io/sweetalert/" target="_blank"><i
-                            class="fa fa-file"></i>Docs</a></p>
+                    <h3 class="title">[[ one_bx.bxname ]]</h3>
+                    <p><a class="btn btn-primary icon-btn" href="#" target="_blank"><i class="fa fa-file"></i>Docs</a></p>
                 </div>
                 <div class="tile-body">
-                    <p>This plugin can be used as the replacement of native javascript alert, confirm and prompt
-                        functions.</p>
-                    <h4>Demo</h4><a class="btn btn-info" id="demoSwal" href="#">Sample Alert</a>
+                    <p>[[ one_bx.introduction ]]</p>
+                    <h5>保费：[[ one_bx.coverage ]]元/起</h5>
+                    <a class="btn btn-info" id="demoSwal" href="#">Sample Alert</a>
                 </div>
             </div>
+
+            <div class="tile" v-if="[[ one_bx.id ]]%3==2">
+                <div class="tile-title-w-btn">
+                    <h3 class="title">[[ one_bx.bxname ]]</h3>
+                    <p><a class="btn btn-primary icon-btn" href="#" target="_blank"><i class="fa fa-file"></i>Docs</a></p>
+                </div>
+                <div class="tile-body">
+                    <p>[[ one_bx.introduction ]]</p>
+                    <h5>保费：[[ one_bx.coverage ]]元/起</h5>
+                    <a class="btn btn-info" id="demoSwal" href="#">Sample Alert</a>
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -92,7 +88,29 @@
 {% block tail %}
 
     <script>
-
+        new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#bx',
+            data: {
+                    bx_list: [],
+                },
+            methods: {
+                showshipslist(){
+                    var that = this;
+                    var url = 'http://localhost:5000/api/bx-list';
+                    data = JSON.stringify({});
+                    axios.get(url, data).then(function (res) {
+                        console.log(res.data);
+                        that.bx_list = res.data['bx_list'];
+                        console.log(that.bx_list.length);
+                        that.total_bx = that.bx_list.length;
+                    });
+                }
+            },
+            created: function () {
+                this.showshipslist();
+            }
+        })
     </script>
 
 {% endblock %}

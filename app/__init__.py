@@ -21,7 +21,7 @@ def create_app(config_name):
     from app.api import api as api_blueprint
     app.register_blueprint(main_blueprint, static_folder='static', template_folder='templates')
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
-    app.register_blueprint(api_blueprint, url_prefix='/api/1.0')
+    app.register_blueprint(api_blueprint, url_prefix='/api')
 
     # 附加路由和自定义的错误页面
 
