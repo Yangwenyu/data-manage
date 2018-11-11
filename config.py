@@ -23,7 +23,7 @@ class DevelopmentConfig(Config):
     DIALECT = 'mysql'
     DRIVER = 'pymysql'
     USERNAME = 'root'
-    PASSWORD = '123456'
+    PASSWORD = '199481'
     HOST = '127.0.0.1'
     PORT = '3306'
     DATABASE = 'flask_datacenter'

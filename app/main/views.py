@@ -22,16 +22,29 @@ from ..models import users, gamedata, bx
 # 边栏菜单
 @main.route('/sidemenu/', methods=['GET'])
 def sidemenu():
-    context = {
-        'sidemenu': gamedata.Data_starsector.query.order_by('listorder').all()
-    }
-
-
-    res = db.session.execute("select b.id, a.pid, a.`name` as topname, b.`name`, b.rule, b.pagetitle, b.pagedesc, b.auth_check, b.only_root from auth_rule as a "
-                     "LEFT JOIN auth_rule as b on a.id = b.pid where a.pid = 0 and b.status = 1 ORDER BY b.listorder").fetchall()
-    print(res)
-
-    return json.dumps(context, cls=AlchemyEncoder)
+    sidemenu = []
+    all_topname = db.session.execute("select distinct a.`name`, a.id from auth_rule as a "
+                                     "where a.pid = 0 and a.status = 1 ORDER BY a.listorder").fetchall()
+    for one_top in all_topname:
+        sql_text = "select b.id, a.`name` as topname, b.`name`, b.rule, b.pagetitle, b.pagedesc, " \
+                   "b.auth_check, b.only_root from auth_rule as a LEFT JOIN auth_rule as b " \
+                   "on a.id = b.pid where b.status = 1 and b.pid = " + str(one_top[1]) + " ORDER BY b.listorder"
+        secondary_rules = db.session.execute(sql_text).fetchall()
+        all_ciji_rules = []
+        ciji_rule = {}
+        for one_rule in secondary_rules:
+            ciji_rule['id'] = one_rule[0]
+            ciji_rule['topname'] = one_rule[1]
+            ciji_rule['name'] = one_rule[2]
+            ciji_rule['rule'] = one_rule[3]
+            ciji_rule['pagetitle'] = one_rule[4]
+            ciji_rule['pagedesc'] = one_rule[5]
+            ciji_rule['auth_check'] = one_rule[6]
+            ciji_rule['only_root'] = one_rule[7]
+            all_ciji_rules.append(ciji_rule)
+        result = {'topname': one_top[0], 'ciji_rule': all_ciji_rules}
+        sidemenu.append(result)
+    return json.dumps({'sidemenu': sidemenu})
 
 
 # 主页视图

@@ -44,8 +44,8 @@
                 </div>
                 <div class="tile-body">
                     <p>[[ one_bx.introduction ]]</p>
-                    <h5>保费：[[ one_bx.coverage ]]元/起</h5>
-                    <a class="btn btn-info" id="demoSwal" href="#">Sample Alert</a>
+                    <h5 class="text-right">保费：[[ one_bx.coverage ]]元/起</h5>
+                    <div class="text-right"><a class="btn btn-info" id="demoSwal" href="#">Sample Alert</a></div>
                 </div>
             </div>
 
@@ -56,8 +56,8 @@
                 </div>
                 <div class="tile-body">
                     <p>[[ one_bx.introduction ]]</p>
-                    <h5>保费：[[ one_bx.coverage ]]元/起</h5>
-                    <a class="btn btn-info" id="demoSwal" href="#">Sample Alert</a>
+                    <h5 class="text-right">保费：[[ one_bx.coverage ]]元/起</h5>
+                    <div class="text-right"><a class="btn btn-info" id="demoSwal" href="#">Sample Alert</a></div>
                 </div>
             </div>
 
@@ -68,8 +68,8 @@
                 </div>
                 <div class="tile-body">
                     <p>[[ one_bx.introduction ]]</p>
-                    <h5>保费：[[ one_bx.coverage ]]元/起</h5>
-                    <a class="btn btn-info" id="demoSwal" href="#">Sample Alert</a>
+                    <h5 class="text-right">保费：[[ one_bx.coverage ]]元/起</h5>
+                    <div class="text-right"><a class="btn btn-info" id="demoSwal" href="#">Sample Alert</a></div>
                 </div>
             </div>
 
@@ -77,11 +77,6 @@
 
     </div>
     </div>
-
-
-
-
-
 
 {% endblock %}
 
@@ -95,7 +90,7 @@
                     bx_list: [],
                 },
             methods: {
-                showshipslist(){
+                showbxlist(){
                     var that = this;
                     var url = 'http://localhost:5000/api/bx-list';
                     data = JSON.stringify({});
@@ -108,7 +103,7 @@
                 }
             },
             created: function () {
-                this.showshipslist();
+                this.showbxlist();
             }
         })
     </script>
